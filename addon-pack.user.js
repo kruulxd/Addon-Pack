@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Addon Pack by Kruul
 // @version      1.0.0
-// @description  Pakiet dodatków Margonem
+// @description  Panel dodatków Margonem
 // @author       Kruul
 // @match        https://*.margonem.pl/*
 // @connect      raw.githubusercontent.com
