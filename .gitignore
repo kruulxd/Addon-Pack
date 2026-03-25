@@ -1,0 +1,25 @@
+# Node
+node_modules/
+package-lock.json
+yarn.lock
+
+# Build
+dist/
+build/
+*.tgz
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+.env
+
+# Local
+*.local.js
+debug/

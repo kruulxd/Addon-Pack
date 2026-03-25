@@ -1,0 +1,10 @@
+{
+  "id": "ulepszarka",
+  "name": "Ulepszarka",
+  "version": "0.1.8",
+  "description": "Auto ulepszanie i rozbijanie",
+  "author": "Kruul",
+  "repository": "https://github.com/kruulxd/Ulepszarka",
+  "main": "ulepszarka-addon.js",
+  "enabled-by-default": false
+}

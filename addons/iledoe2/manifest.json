@@ -1,0 +1,10 @@
+{
+  "id": "iledoe2",
+  "name": "Za ile respi",
+  "version": "1.2",
+  "description": "Timery elit II i tytanów z pełną integracją Lootlog",
+  "author": "Kruul",
+  "repository": "https://github.com/kruulxd/iledoe2",
+  "main": "iledoe2-addon.js",
+  "enabled-by-default": false
+}
