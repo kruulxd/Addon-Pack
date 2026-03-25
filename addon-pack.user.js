@@ -26,7 +26,6 @@
                 if (response.status === 200) {
                     try {
                         eval(response.responseText);
-                        console.log(`[Addon Pack] ✓ Załadowany: ${addon.name}`);
                     } catch (e) {
                         console.error(`[Addon Pack] Błąd wykonania ${addon.id}:`, e);
                     }
@@ -48,7 +47,6 @@
                 if (response.status === 200) {
                     try {
                         eval(response.responseText);
-                        console.log('[Addon Pack] ✓ Bundle załadowany i inicjalizowany');
                     } catch (e) {
                         console.error('[Addon Pack] Błąd wykonania bundle:', e);
                     }
