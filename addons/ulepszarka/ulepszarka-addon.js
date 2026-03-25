@@ -1,13 +1,9 @@
 // Ulepszarka Addon Wrapper
-// Ten adapter ładuje pełny kod z zewnętrznego bundla GitHub
-// Zapewnia integrację z panelem Addon Pack
 
 (function() {
     'use strict';
     
-    console.log('🔧 Ładowanie Ulepszarki...');
-    
-    // Expozycja GM API dla Ulepszarki
+    // Expozycja GM API
     window.ulepszarka = {
         GM_getValue: (key, defaultValue) => {
             const stored = localStorage.getItem(`ulepszarka_${key}`);
@@ -31,7 +27,6 @@
         }
     };
     
-    // Ładowanie bundla Ulepszarki
     async function loadUlepszarkaBundle() {
         try {
             const bundleUrl = 'https://raw.githubusercontent.com/kruulxd/Ulepszarka/main/ulepszarka-bundle.js?v=' + Date.now();
@@ -46,21 +41,11 @@
             script.textContent = code;
             script.id = 'ulepszarka-bundle';
             document.body.appendChild(script);
-            
-            console.log('✓ Ulepszarka bundle załadowany');
         } catch (error) {
-            console.error('✗ Błąd ładowania bundla Ulepszarki:', error);
+            console.error('✗ Ulepszarka:', error);
         }
     }
     
-    // Oczekiwanie na Engine
-    function waitForEngine() {
-        if (window.Engine?.allInit && typeof window._g === 'function') {
-            loadUlepszarkaBundle();
-        } else {
-            setTimeout(waitForEngine, 100);
-        }
-    }
-    
-    waitForEngine();
+    // Ładuj zaraz
+    loadUlepszarkaBundle();
 })();
