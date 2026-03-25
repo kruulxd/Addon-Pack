@@ -1,7 +1,7 @@
 {
   "name": "addon-pack",
   "version": "1.0.0",
-  "description": "Zintegrowany system zarządzania dodatkami do gry Margonem",
+  "description": "Modular addon system for Margonem game",
   "author": "Kruul",
   "license": "MIT",
   "repository": {
@@ -13,27 +13,12 @@
     "addon",
     "tampermonkey",
     "userscript",
-    "upgrade",
-    "elite",
-    "timer"
+    "modular"
   ],
   "scripts": {
-    "test": "echo \"No tests available yet\"",
-    "update": "git pull && git push"
+    "dev": "echo 'Develop by editing files locally and testing in Tampermonkey'",
+    "build": "echo 'No build step needed - files are used directly from GitHub'",
+    "test": "echo 'Test by installing addon-pack.user.js in Tampermonkey on dev domain'"
   },
-  "engines": {
-    "browser": "*"
-  },
-  "supported-browsers": [
-    "Chrome",
-    "Firefox",
-    "Safari",
-    "Edge"
-  ],
-  "project-links": {
-    "homepage": "https://github.com/kruulxd/Addon-Pack",
-    "ulepszarka": "https://github.com/kruulxd/Ulepszarka",
-    "iledoe2": "https://github.com/kruulxd/iledoe2",
-    "game": "https://margonem.pl"
-  }
+  "noInstall": true
 }
