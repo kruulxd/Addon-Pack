@@ -17,12 +17,18 @@
         { id: 'iledoe2', name: 'Za ile respi', file: 'iledoe2-addon.js' }
     ];
     
+<<<<<<< HEAD
     let loaded = {};
     let settings = JSON.parse(localStorage.getItem('addonPackSettings') || '{}');
 
     function loadAddon(addon) {
         if (loaded[addon.id]) return;
         
+=======
+    let loaded = { ulepszarka: false, iledoe2: false };
+
+    function loadAddon(addon) {
+>>>>>>> 6ffc7a52b56982f1b86c495c3254a6a3ab4cb1a2
         const url = `${REPO_BASE}/addons/${addon.id}/${addon.file}?v=${Date.now()}`;
         
         fetch(url)
@@ -37,6 +43,7 @@
                 document.body.appendChild(script);
                 loaded[addon.id] = true;
             })
+<<<<<<< HEAD
             .catch(e => console.error(`✗ ${addon.name}:`, e.message));
     }
 
@@ -203,6 +210,29 @@
         });
     }
 
+=======
+            .catch(e => console.error(`[Addon Pack] ✗ ${addon.name}:`, e.message));
+    }
+
+    // Auto-load addony jeśli były włączone
+    const savedSettings = JSON.parse(localStorage.getItem('addonPackSettings') || '{}');
+    
+    function init() {
+        ADDONS.forEach(addon => {
+            if (savedSettings[addon.id]?.enabled) {
+                loadAddon(addon);
+            }
+        });
+        
+        // Expose API dla panelu
+        window.addonPack = {
+            loadAddon: loadAddon,
+            getLoaded: () => loaded,
+            ADDONS: ADDONS
+        };
+    }
+
+>>>>>>> 6ffc7a52b56982f1b86c495c3254a6a3ab4cb1a2
     // Czekaj na Engine
     if (window.Engine?.allInit && typeof window._g === 'function') {
         init();
