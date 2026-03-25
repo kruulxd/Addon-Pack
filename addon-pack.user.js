@@ -5,61 +5,60 @@
 // @author       Kruul
 // @match        https://*.margonem.pl/*
 // @connect      raw.githubusercontent.com
-// @grant        GM_setValue
-// @grant        GM_getValue
-// @grant        GM_deleteValue
-// @grant        GM_listValues
-// @grant        GM_xmlhttpRequest
+// @grant        none
 // ==/UserScript==
 
 (function() {
     'use strict';
 
-    const REPO_BASE = 'https://raw.githubusercontent.com/kruulxd/Addon-Pack/refs/heads/main';
+    const REPO_BASE = 'https://raw.githubusercontent.com/kruulxd/Addon-Pack/main';
+    const ADDONS = [
+        { id: 'ulepszarka', name: 'Ulepszarka', file: 'ulepszarka-addon.js' },
+        { id: 'iledoe2', name: 'Za ile respi', file: 'iledoe2-addon.js' }
+    ];
     
-    // Wrapper do ładowania bundli z obejściem CSP
-    window.addonPackLoadSubBundle = function(addon) {
-        GM_xmlhttpRequest({
-            method: 'GET',
-            url: `${REPO_BASE}/addons/${addon.id}/bundle.js?v=${Date.now()}`,
-            onload: function(response) {
-                if (response.status === 200) {
-                    try {
-                        eval(response.responseText);
-                    } catch (e) {
-                        console.error(`[Addon Pack] Błąd wykonania ${addon.id}:`, e);
-                    }
-                } else {
-                    console.error(`[Addon Pack] Błąd HTTP ${response.status} dla ${addon.name}`);
-                }
-            },
-            onerror: function(error) {
-                console.error(`[Addon Pack] Błąd ładowania: ${addon.name}`);
-            }
-        });
-    };
-    
-    function loadBundle() {
-        GM_xmlhttpRequest({
-            method: 'GET',
-            url: `${REPO_BASE}/addon-pack-bundle.js?v=${Date.now()}`,
-            onload: function(response) {
-                if (response.status === 200) {
-                    try {
-                        eval(response.responseText);
-                    } catch (e) {
-                        console.error('[Addon Pack] Błąd wykonania bundle:', e);
-                    }
-                } else {
-                    console.error('[Addon Pack] Błąd HTTP ' + response.status);
-                }
-            },
-            onerror: function(error) {
-                console.error('[Addon Pack] Błąd ładowania bundle:', error);
-            }
-        });
+    let loaded = { ulepszarka: false, iledoe2: false };
+
+    function loadAddon(addon) {
+        const url = `${REPO_BASE}/addons/${addon.id}/${addon.file}?v=${Date.now()}`;
+        
+        fetch(url)
+            .then(r => {
+                if (!r.ok) throw new Error(`HTTP ${r.status}`);
+                return r.text();
+            })
+            .then(code => {
+                const script = document.createElement('script');
+                script.textContent = code;
+                script.id = `addon-${addon.id}`;
+                document.body.appendChild(script);
+                loaded[addon.id] = true;
+            })
+            .catch(e => console.error(`[Addon Pack] ✗ ${addon.name}:`, e.message));
     }
 
-    // Ładuj bundle od razu
-    loadBundle();
+    // Auto-load addony jeśli były włączone
+    const savedSettings = JSON.parse(localStorage.getItem('addonPackSettings') || '{}');
+    
+    function init() {
+        ADDONS.forEach(addon => {
+            if (savedSettings[addon.id]?.enabled) {
+                loadAddon(addon);
+            }
+        });
+        
+        // Expose API dla panelu
+        window.addonPack = {
+            loadAddon: loadAddon,
+            getLoaded: () => loaded,
+            ADDONS: ADDONS
+        };
+    }
+
+    // Czekaj na Engine
+    if (window.Engine?.allInit && typeof window._g === 'function') {
+        init();
+    } else {
+        setTimeout(() => init(), 500);
+    }
 })();
