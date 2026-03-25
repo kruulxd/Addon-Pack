@@ -5,6 +5,7 @@
     
     async function loadIledoe2Code() {
         try {
+            // GitHub raw content URL (obsługuje CORS)
             const codeUrl = 'https://github.com/kruulxd/iledoe2/raw/refs/heads/main/za-ile-respi-addon.user.js?v=' + Date.now();
             const response = await fetch(codeUrl);
             

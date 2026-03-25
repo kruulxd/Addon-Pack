@@ -4,6 +4,8 @@
 // @description  Panel dodatków Margonem
 // @author       Kruul
 // @match        https://*.margonem.pl/*
+// @connect      raw.githubusercontent.com
+// @connect      github.com
 // @grant        none
 // ==/UserScript==
 
