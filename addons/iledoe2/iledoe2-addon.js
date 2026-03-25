@@ -5,23 +5,14 @@
     
     async function loadIledoe2Code() {
         try {
-            // Spróbuj nową nazwę pliku
-            const urls = [
-                'https://raw.githubusercontent.com/kruulxd/iledoe2/main/za-ile-respi-addon.user.js',
-                'https://raw.githubusercontent.com/kruulxd/iledoe2/main/za-ile-respi-addon.js'
-            ];
+            const codeUrl = 'https://github.com/kruulxd/iledoe2/raw/refs/heads/main/za-ile-respi-addon.user.js?v=' + Date.now();
+            const response = await fetch(codeUrl);
             
-            let code = null;
-            for (const url of urls) {
-                const response = await fetch(url + '?v=' + Date.now());
-                if (response.ok) {
-                    code = await response.text();
-                    break;
-                }
+            if (!response.ok) {
+                throw new Error(`HTTP ${response.status}`);
             }
             
-            if (!code) throw new Error('File not found');
-            
+            const code = await response.text();
             const script = document.createElement('script');
             script.textContent = code;
             script.id = 'iledoe2-code';
